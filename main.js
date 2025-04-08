@@ -56,10 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("touchmove", (e) => {
     if (isDragging) {
+      e.preventDefault(); 
       const touch = e.touches[0];
       setValueByPosition(touch.clientX, touch.clientY);
     }
-  }, { passive: true });
+  }, { passive: false });
 
   document.addEventListener("touchend", () => {
     isDragging = false;
