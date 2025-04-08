@@ -12,6 +12,61 @@ document.addEventListener("DOMContentLoaded", () => {
     ringProgress.style.strokeDashoffset = offset;
   }
 
+  let isDragging = false;
+
+  function setValueByPosition(clientX, clientY) {
+    const rect = ringBlock.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const x = clientX - centerX;
+    const y = clientY - centerY;
+
+    let angle = Math.atan2(x, -y) * (180 / Math.PI);
+    if (angle < 0) angle += 360;
+
+    const value = Math.round((angle / 360) * 100);
+
+    valueInput.value = value;
+    updateProgress(value);
+  }
+
+  ringBlock.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    setValueByPosition(e.clientX, e.clientY);
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      setValueByPosition(e.clientX, e.clientY);
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  ringBlock.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    setValueByPosition(touch.clientX, touch.clientY);
+  }, { passive: true });
+
+  document.addEventListener("touchmove", (e) => {
+    if (isDragging) {
+      const touch = e.touches[0];
+      setValueByPosition(touch.clientX, touch.clientY);
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", () => {
+    isDragging = false;
+  });
+
+  ringBlock.addEventListener("click", (e) => {
+    setValueByPosition(e.clientX, e.clientY);
+  });
+
   valueInput.addEventListener("input", (e) => {
     let raw = e.target.value.replace(/[^0-9]/g, "");
     if (raw.length > 1 && raw.startsWith("0")) {
@@ -34,23 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
       animateToggle.checked = false;
       ringBlock.classList.remove("circle-progress--animated");
     }
-  });
-
-  ringBlock.addEventListener("click", (e) => {
-    const rect = ringBlock.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const x = e.clientX - centerX;
-    const y = e.clientY - centerY;
-
-    let angle = Math.atan2(x, -y) * (180 / Math.PI);
-    if (angle < 0) angle += 360;
-
-    const value = Math.round((angle / 360) * 100);
-
-    valueInput.value = value;
-    updateProgress(value);
   });
 
   window.ProgressBlock = {
