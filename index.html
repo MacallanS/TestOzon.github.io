@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circle Progress</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="circle-progress">
+      <h1 class="circle-progress__title">Progress</h1>
+      <div class="circle-progress__wrap">
+        <svg class="circle-progress__svg" id="ringBlock" viewBox="0 0 140 140">
+          <circle
+            class="circle-progress__bg"
+            cx="70"
+            cy="70"
+            r="60"
+            stroke-width="10"
+          />
+          <circle
+            class="circle-progress__ring"
+            id="ringMain"
+            cx="70"
+            cy="70"
+            r="60"
+            stroke-width="10"
+            stroke-linecap="round"
+            stroke-dasharray="377"
+            stroke-dashoffset="377"
+          />
+        </svg>
+
+        <div class="circle-progress__controls">
+          <label class="circle-progress__input" for="valueInput">
+
+            <input class="circle-progress__number" type="number" id="valueInput" value="0" inputmode="numeric" pattern="[0-9]*" />
+            <p class="circle-progress__label">Value</p>
+          </label>
+        
+          <label class="circle-progress__switch" for="animateToggle">
+
+            <input type="checkbox" id="animateToggle" />
+            <span class="circle-progress__slider"></span>
+            <p class="circle-progress__label">Animate</p>
+          </label>
+        
+          <label class="circle-progress__switch" for="hideToggle">
+            <input type="checkbox" id="hideToggle" />
+            <span class="circle-progress__slider"></span>
+            <p class="circle-progress__label">Hide</p>
+          </label>
+        </div>        
+      </div>
+    </section>
+    <script src="main.js"></script>
+  </body>
+</html>
