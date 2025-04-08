@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   ringBlock.addEventListener("mousedown", (e) => {
+    e.preventDefault();
     isDragging = true;
     setValueByPosition(e.clientX, e.clientY);
   });
@@ -47,10 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   ringBlock.addEventListener("touchstart", (e) => {
+    e.preventDefault();
     isDragging = true;
     const touch = e.touches[0];
     setValueByPosition(touch.clientX, touch.clientY);
-  }, { passive: true });
+  }, { passive: false });
 
   document.addEventListener("touchmove", (e) => {
     if (isDragging) {
@@ -64,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   ringBlock.addEventListener("click", (e) => {
+    e.preventDefault();
     setValueByPosition(e.clientX, e.clientY);
   });
 
